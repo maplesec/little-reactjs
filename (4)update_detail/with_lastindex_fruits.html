@@ -593,19 +593,45 @@ React = {
 var HelloMessage = React.createClass({
     getInitialState: function() {
         return {
-            type: 'say:'
+            type: 'click me!:',
+            list: [{
+                value: '香蕉',
+                key: 'x',
+            },{
+                value: '苹果',
+                key: 'p',
+            },{
+                value: '菠萝',
+                key: 'b',
+            }]
         };
     },
     changeType: function() {
-        this.props.name = '我已经被异步更新了，由于我使用了lastindex，所以大部分节点不需要被删除'
         this.setState({
-            type: 'shout:'
+            type: 'yeah! you clicked!',
+            list: [,{
+                value: '橘子',
+                key: 'j',
+            },{
+                value: '菠萝',
+                key: 'b',
+            },{
+                value: '香蕉',
+                key: 'x',
+            }]
         })
     },
     render: function() {
-        return React.createElement("div", {
+        var button = React.createElement("div", {
             onclick: this.changeType.bind(this)
-        }, this.state.type, "Hello ", this.props.name);
+        }, this.state.type);
+        var createItem = function(itemText, index) {
+            return React.createElement("div", {key: itemText.key}, itemText.value);
+        };
+        var list = this.state.list.map(createItem);
+        var listWrapper = React.createElement("div", null, list);
+        var children = [button].concat(listWrapper);
+        return React.createElement("div", null, children);
     }
 });
 
